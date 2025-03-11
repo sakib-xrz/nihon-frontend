@@ -126,7 +126,7 @@ export default function RecentProductCard({ data }) {
             </div>
           ))}
           <div style={{ width: "300px", margin: "0 auto" }}>
-            <ul className="iconul flex flex-col justify-center items-center gap-8 rounded">
+            <ul className="iconul flex flex-col justify-center items-center gap-8 rounded z-50">
               <li>
                 <i
                   onClick={() => addToWishlist(item)}

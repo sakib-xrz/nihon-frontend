@@ -64,19 +64,14 @@ export const productApi = baseApi.injectEndpoints({
     }),
 
     fetchAllProducts: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-        if (args) {
-          args.forEach((item) => {
-            params.append(item.name, item.value);
-          });
-        }
+      query: (params) => {
         return {
           url: "/product/get-all-products",
           method: "GET",
-          params: params,
+          params,
         };
       },
+
       providesTags: ["product"],
     }),
   }),
