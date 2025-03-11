@@ -12,6 +12,7 @@ import "../style/productCart.css";
 import Error from "./Error";
 import GlobalModalCard from "./GlobalModalCard/GlobalModalCard";
 import Loading from "./Loading";
+import { sanitizeParams } from "@/utils";
 
 export default function Product() {
   const user = useSelector((state) => state?.auth?.user);
@@ -25,11 +26,13 @@ export default function Product() {
   const [selectImage, setSelectImage] = useState(0);
   const [singleProductData, setSingleProductData] = useState({});
 
-  const { isLoading, isError, data } = useFetchAllProductsQuery([
-    { name: "page", value: page || 1 },
-    { name: "limit", value: limit },
-    { name: "sort", value: "desc" },
-  ]);
+  const { isLoading, isError, data } = useFetchAllProductsQuery(
+    sanitizeParams({
+      page: page,
+      limit: limit,
+      sort: "desc",
+    })
+  );
 
   let content;
 
