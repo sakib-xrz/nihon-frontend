@@ -1,0 +1,85 @@
+
+.shopFilter {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+/* .filter */
+.shopFilterActive {
+    max-height: 1500px;
+}
+.sortItem {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sortItem:hover {
+    background-color: #f0f0f0; /* Ant Design's light gray hover color */
+}
+
+.sortText {
+    color: #000;
+    font-weight: 500;
+}
+
+.imgContainer {
+    margin: 0 auto;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden; 
+  }
+  
+  .imgContainer .img_single {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    cursor: pointer;
+  }
+  
+  .imgContainer .img_single:first-child {
+    opacity: 1; 
+  }
+  
+  .imgContainer:hover .img_single:first-child {
+    opacity: 0; 
+  }
+  
+  .imgContainer:hover .img_single:nth-child(2) {
+    opacity: 1; 
+  }
+  
+  
+  .iconul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    text-align: center;
+    height: 100%;
+    margin: 0 20px;
+    background-color: rgba(0, 0, 0, 0.304)
+  }
+  .iconul li{
+    cursor: pointer;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .spin {
+    animation: spin 3s linear infinite;
+  }
+  

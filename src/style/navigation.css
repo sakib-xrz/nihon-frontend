@@ -1,0 +1,91 @@
+.mobieSearch {
+    margin: 4px;
+    display: none !important;
+}
+
+.desktopMenu {
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.hamburger {
+    display: none !important;
+}
+
+.desktopMenu ul {
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+    word-spacing: 20px;  /* Corrected 'word-spacing' with 'px' */
+    color: white;
+    gap: 20px; /* Corrected 'gap' with 'px' */
+}
+
+.link {
+    margin: 0 10px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .desktopSearch {
+        display: none !important;
+    }
+    .mobieSearch {
+        display: block !important;
+    }
+    .desktopMenu {
+        display: none !important;
+    }
+    .hamburger {
+        display: block !important; /* Removed the quotes around 'block' */
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .desktopSearch {
+        display: none !important;
+    }
+    .mobieSearch {
+        display: block !important;
+    }
+    .desktopMenu {
+        display: none !important;
+    }
+    .hamburger {
+        display: block !important; /* Removed the quotes */
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .desktopSearch {
+        display: none !important;
+    }
+    .mobieSearch {
+        display: block !important;
+    }
+    .desktopMenu {
+        display: none !important;
+    }
+    .hamburger {
+        display: block !important; /* Removed the quotes */
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    /* Add any specific styles here for large devices */
+}
+
+/* Extra large devices (desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    /* Add any specific styles here for extra-large devices */
+}
+
+/* Extra extra large devices (largest desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    /* Add any specific styles here for extra-extra large devices */
+}

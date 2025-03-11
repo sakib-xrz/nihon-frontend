@@ -1,0 +1,29 @@
+.skncareBanner {
+    padding: 60px 0px;
+    margin: 100px 0px;
+    background: url(../assets/bannerimg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top ;
+}
+.shopButton{
+    background: #663130;
+    padding: 4px 20px;
+    border: none;
+    outline: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    word-spacing: 4px;
+}
+.shopButton:hover{
+    background: transparent!important;
+    padding: 4px 20px;
+    border:  2px solid #663130!important;
+    outline: none;
+    color: #663130!important;
+    text-transform: uppercase;
+    font-weight: 700;
+    word-spacing: 4px;
+}
