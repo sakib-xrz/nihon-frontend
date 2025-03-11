@@ -1,130 +1,132 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import '../style/navigation.css';
-import { Drawer, Dropdown, Menu } from 'antd';
-import MobileMenu from './MobileMenu';
-import { useDispatch, useSelector } from 'react-redux';
-import { DownOutlined } from '@ant-design/icons';
-import { logout } from '@/redux/feathers/Auth/AuthSlice';
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/feathers/Auth/AuthSlice";
+import MobileMenu from "./MobileMenu";
 
 export default function Information() {
-    const currentCart = useSelector((state) => state?.products?.cartItem);
-    const wishlist = useSelector((state) => state?.wishlist?.wishlist);
-    const user = useSelector((state)=> state?.auth?.user);
-    const dispatch = useDispatch()
+  const currentCart = useSelector((state) => state?.products?.cartItem);
+  const wishlist = useSelector((state) => state?.wishlist?.wishlist);
+  const user = useSelector((state) => state?.auth?.user);
+  const dispatch = useDispatch();
 
-    const [open, setOpen] = useState(false);
-    const [drawerWidth, setDrawerWidth] = useState('30%');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-    const showDrawer = () => {
-        setOpen(true);
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
     };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    const onClose = () => {
-        setOpen(false);
-    };
-
-    // Update drawer width based on screen size
-    useEffect(() => {
-        const updateDrawerWidth = () => {
-            if (window.innerWidth < 640) {
-                setDrawerWidth('50%');
-            } else if (window.innerWidth < 768) {
-                setDrawerWidth('40%');
-            } else {
-                setDrawerWidth('30%');
-            }
-        };
-
-        window.addEventListener('resize', updateDrawerWidth);
-        updateDrawerWidth();
-
-        return () => {
-            window.removeEventListener('resize', updateDrawerWidth);
-        };
-    }, []);
-    
-    const menu = (
-        <Menu>
-          <Menu.Item  key="1">
-            {user ? <p onClick={()=>dispatch(logout())} className='text-[20px]'>
-              Logout
-            </p>
-            :
-            <Link className='text-[20px]' href="/login">
-              Login
-            </Link>}
-          </Menu.Item>
-          <Menu.Item  key="2">
-            <Link className='text-[20px]' href="/signup">
-              Registration
-            </Link>
-          </Menu.Item>
-          <Menu.Item  key="3">
-            <Link className='text-[20px]' href="/forgot-password">
-              Forgot Password
-            </Link>
-          </Menu.Item>
-          {user?.role === 'admin' && <Menu.Item  key="3">
-            <Link className='text-[20px]' href="/dashboard">
-            Dashboard
-            </Link>
-          </Menu.Item>}
-          {user  && <Menu.Item  key="3">
-            <Link className='text-[20px]' href="/myorder">
-            My Order
-            </Link>
-          </Menu.Item>}
-        </Menu>
-      );
-
-    return (
-        <>
-            <ul className='flex gap-5 items-center'>
-                <li>
-                    <Dropdown overlay={menu} trigger={['click']}>
-                        <i className="text-white text-[25px] fa-solid fa-user cursor-pointer">
-                        </i>
-                    </Dropdown>
+  return (
+    <div className="flex items-center gap-5">
+      {/* User Dropdown */}
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={toggleDropdown}
+          className="text-white text-2xl focus:outline-none"
+        >
+          <i className="fa-solid fa-user"></i>
+        </button>
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50">
+            <ul>
+              <li
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+                onClick={() => user && dispatch(logout())}
+              >
+                {user ? "Logout" : <Link href="/login">Login</Link>}
+              </li>
+              {!user && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
+                  <Link href="/signup">Registration</Link>
                 </li>
-                <li className='relative'>
-                    <Link href='/cart'>
-                        <i className="text-white text-[25px] fa-solid fa-cart-shopping"></i>
-                        {currentCart?.length > 0 && (
-                            <div className='absolute text-red-600 w-[35px] font-[700] h-[35px] p-1 mt-[-55px] left-3 flex justify-center items-center border rounded-full'>
-                                {currentCart.length}
-                            </div>
-                        )}
-                    </Link>
+              )}
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
+                <Link href="/forgot-password">Forgot Password</Link>
+              </li>
+              {user?.role === "admin" && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
+                  <Link href="/dashboard">Dashboard</Link>
                 </li>
-                <li className='relative'>
-                    <Link href='/wishlist'>
-                        <i className="text-white text-[25px] fa-solid fa-heart"></i>
-                        {wishlist?.length > 0 && (
-                            <div className='absolute text-red-600 w-[35px] font-[700] h-[35px] p-1 mt-[-55px] left-3 flex justify-center items-center border rounded-full'>
-                                {wishlist.length}
-                            </div>
-                        )}
-                    </Link>
+              )}
+              {user && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
+                  <Link href="/myorder">My Order</Link>
                 </li>
-                <li onClick={showDrawer} className='hamburger'>
-                    <i className="text-white text-[25px] fa-solid fa-bars"></i>
-                </li>
+              )}
             </ul>
+          </div>
+        )}
+      </div>
 
-            <Drawer
-                title={<p className='text-[20px] text-white'>Navigation</p>}
-                placement="right"
-                closable={false}
-                onClose={onClose}
-                open={open}
-                width={drawerWidth}
-                style={{ backgroundColor: '#F9A8D4' }}
-                className='custom-drawer bg-[#F9A8D4]'
-            >
-                <MobileMenu />
-            </Drawer>
-        </>
-    );
+      {/* Cart Icon */}
+      <div className="relative">
+        <Link href="/cart">
+          <button className="text-white text-2xl focus:outline-none">
+            <i className="fa-solid fa-cart-shopping"></i>
+          </button>
+        </Link>
+        {currentCart?.length > 0 && (
+          <div className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            {currentCart.length}
+          </div>
+        )}
+      </div>
+
+      {/* Wishlist Icon */}
+      <div className="relative">
+        <Link href="/wishlist">
+          <button className="text-white text-2xl focus:outline-none">
+            <i className="fa-solid fa-heart"></i>
+          </button>
+        </Link>
+        {wishlist?.length > 0 && (
+          <div className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            {wishlist.length}
+          </div>
+        )}
+      </div>
+
+      {/* Hamburger for Mobile Drawer */}
+      <button
+        onClick={() => setDrawerOpen(true)}
+        className="text-white text-2xl focus:outline-none md:hidden"
+      >
+        <i className="fa-solid fa-bars"></i>
+      </button>
+
+      {/* Mobile Drawer */}
+      {drawerOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          <div
+            className="fixed inset-0 bg-black opacity-50"
+            onClick={() => setDrawerOpen(false)}
+          ></div>
+          <div className="relative ml-auto bg-pink-400 w-11/12 max-w-xs p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-white text-lg">Navigation</h2>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="text-white text-2xl focus:outline-none"
+              >
+                &times;
+              </button>
+            </div>
+            <MobileMenu />
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
