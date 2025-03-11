@@ -7,18 +7,17 @@ import RecentProduct from "@/components/RecentProduct";
 import SkinCareBanner from "@/components/SkinCareBanner";
 import Subscribe from "@/components/Subscribe";
 
-
 export default function Home() {
   return (
     <div className="w-full">
       <Banner />
       <Category />
-       <SkinCareBanner/>
-      <Product/>
-      <RecentProduct/>
-      <Subscribe/>
-      <Brand/>
-      <PreOrder/>
+      <SkinCareBanner />
+      <Product />
+      <RecentProduct />
+      <Subscribe />
+      <Brand />
+      <PreOrder />
     </div>
   );
 }
