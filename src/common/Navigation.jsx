@@ -10,7 +10,9 @@ export default function Navigation() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <h3 className="text-2xl font-bold text-white">LOGO</h3>
+          <Link href={"/"} className="text-2xl font-bold text-white">
+            LOGO
+          </Link>
 
           {/* Desktop Search */}
           <div className="hidden md:block w-2/3">

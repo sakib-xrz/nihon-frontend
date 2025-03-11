@@ -30,42 +30,16 @@ export default function Information() {
 
   return (
     <div className="flex items-center gap-5">
-      {/* User Dropdown */}
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={toggleDropdown}
-          className="text-white text-2xl focus:outline-none"
-        >
-          <i className="fa-solid fa-user"></i>
-        </button>
-        {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50">
-            <ul>
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
-                onClick={() => user && dispatch(logout())}
-              >
-                {user ? "Logout" : <Link href="/login">Login</Link>}
-              </li>
-              {!user && (
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
-                  <Link href="/signup">Registration</Link>
-                </li>
-              )}
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
-                <Link href="/forgot-password">Forgot Password</Link>
-              </li>
-              {user?.role === "admin" && (
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
-                  <Link href="/dashboard">Dashboard</Link>
-                </li>
-              )}
-              {user && (
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800">
-                  <Link href="/myorder">My Order</Link>
-                </li>
-              )}
-            </ul>
+      {/* Wishlist Icon */}
+      <div className="relative">
+        <Link href="/wishlist">
+          <button className="text-white text-2xl focus:outline-none">
+            <i className="fa-solid fa-heart"></i>
+          </button>
+        </Link>
+        {wishlist?.length > 0 && (
+          <div className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            {wishlist.length}
           </div>
         )}
       </div>
@@ -84,16 +58,49 @@ export default function Information() {
         )}
       </div>
 
-      {/* Wishlist Icon */}
-      <div className="relative">
-        <Link href="/wishlist">
-          <button className="text-white text-2xl focus:outline-none">
-            <i className="fa-solid fa-heart"></i>
-          </button>
-        </Link>
-        {wishlist?.length > 0 && (
-          <div className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-            {wishlist.length}
+      {/* User Dropdown */}
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={toggleDropdown}
+          className="text-white text-2xl focus:outline-none"
+        >
+          <i className="fa-solid fa-user"></i>
+        </button>
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50">
+            <ul>
+              {!user && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800 rounded rounded-b-none">
+                  <Link href="/login">Login</Link>
+                </li>
+              )}
+              {user?.role === "admin" && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800 rounded">
+                  <Link href="/dashboard">Dashboard</Link>
+                </li>
+              )}
+              {!user && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800 rounded">
+                  <Link href="/signup">Registration</Link>
+                </li>
+              )}
+              {/* <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800 rounded">
+                <Link href="/forgot-password">Forgot Password</Link>
+              </li> */}
+              {user && (
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800 rounded">
+                  <Link href="/myorder">My Order</Link>
+                </li>
+              )}
+              {user && (
+                <li
+                  className="px-4 py-2 hover:bg-red-500 cursor-pointer text-gray-800 rounded hover:text-white rounded-t-none"
+                  onClick={() => user && dispatch(logout())}
+                >
+                  Logout
+                </li>
+              )}
+            </ul>
           </div>
         )}
       </div>

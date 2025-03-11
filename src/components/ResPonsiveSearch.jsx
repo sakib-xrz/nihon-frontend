@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SearchOutlined } from "@ant-design/icons";
 
 export default function ResPonsiveSearch() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function ResPonsiveSearch() {
         type="submit"
         className="px-3 py-2 bg-pink-500 text-white rounded-r-md hover:bg-pink-600"
       >
-        Search
+        <SearchOutlined />
       </button>
     </form>
   );
