@@ -1,3 +1,6 @@
+"use client";
+
+import { useInWishlist } from "@/redux/feathers/wishlist/wishlistSlice";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,6 +15,8 @@ export default function ProductCard({
   setSingleProductData,
   setTitle,
 }) {
+  const isInWishlist = useInWishlist(item?._id);
+
   return (
     <div
       key={item?._id}
@@ -60,7 +65,11 @@ export default function ProductCard({
         <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2 transform space-y-3 opacity-0 transition-all duration-300 group-hover:opacity-100">
           <button
             onClick={() => addToWishlist(item)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
+            className={
+              isInWishlist
+                ? "flex h-10 w-10 items-center justify-center rounded-full shadow-lg transition-all bg-red-50 text-red-500 shadow-red-100"
+                : "flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
+            }
           >
             <i className="fa-regular fa-heart text-lg"></i>
           </button>
@@ -92,7 +101,7 @@ export default function ProductCard({
 
       <div className="space-y-3 p-4">
         <Link href={`/product/${item?._id}`}>
-          <h3 className="truncate text-lg font-medium text-gray-900 transition-colors hover:text-purple-600">
+          <h3 className="line-clamp-1 text-lg font-medium text-gray-900 transition-colors hover:text-[#f472b6]">
             {item?.name}
           </h3>
         </Link>

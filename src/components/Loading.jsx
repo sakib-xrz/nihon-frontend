@@ -1,9 +1,9 @@
-import { BounceLoader } from "react-spinners";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function Loading() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <BounceLoader style={{ color: "#FF7CAF" }} />
+    <div className="flex items-center justify-center h-screen">
+      <LoadingOutlined className="text-4xl" />
     </div>
   );
 }
