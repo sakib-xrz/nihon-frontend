@@ -27,6 +27,7 @@ import GlobalModalCard from "./GlobalModalCard/GlobalModalCard";
 import Loading from "./Loading";
 import { sanitizeParams } from "@/utils";
 import debounce from "lodash/debounce";
+import ProductCard from "./ProductCard";
 
 const { Option } = Select;
 const { useBreakpoint } = Grid;
@@ -223,93 +224,18 @@ function Shop() {
     content = productData.data.map((item) => {
       const isOutOfStock = item?.in_stock <= 0;
       return (
-        <div
+        <ProductCard
           key={item?._id}
-          data-aos="fade-up"
-          data-aos-anchor-placement="top-bottom"
-          data-aos-delay="500"
-          className="mt-5 mx-auto relative"
-        >
-          <div className="imgContainer" style={{ position: "relative" }}>
-            {isOutOfStock && (
-              <div
-                className="out-of-stock-overlay"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  color: "#fff",
-                  fontSize: "1.5rem",
-                  zIndex: 2,
-                }}
-              >
-                Out of Stock
-              </div>
-            )}
-            {item?.images?.slice(0, 2).map((img, imgIndex) => (
-              <div key={imgIndex} className="img_single">
-                <Link href={`/product/${item?._id}`}>
-                  <Image
-                    src={img}
-                    width={300}
-                    height={300}
-                    className="mx-auto text-center"
-                    alt={`Image ${imgIndex}`}
-                  />
-                </Link>
-              </div>
-            ))}
-            <div style={{ width: "300px", margin: "0 auto" }}>
-              <ul className="iconul flex flex-col justify-center items-center gap-8 rounded z-50">
-                <li>
-                  <i
-                    onClick={() => addToWishlist(item)}
-                    className="text-[20px] text-white fa-regular fa-heart"
-                  ></i>
-                </li>
-                <li onClick={() => handleAddToCart(item)}>
-                  <i
-                    className={`text-[20px] ${
-                      isOutOfStock ? "text-gray-400" : "text-white"
-                    } fa-solid fa-cart-shopping`}
-                  ></i>
-                </li>
-                <li
-                  onClick={() => {
-                    setOpen(true);
-                    setSingleProductData(item);
-                    setSelectedImages(item.images);
-                    setTitle(item.name);
-                    setSelectImage(0);
-                  }}
-                >
-                  <i className="text-[20px] text-white fa-solid fa-eye"></i>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex justify-evenly">
-            <h4 className="font-medium p-2">Price: {item?.price} Tk</h4>
-            <h4 className="font-medium p-2">
-              {isOutOfStock ? "Out of Stock" : `In Stock: ${item?.in_stock}`}
-            </h4>
-          </div>
-          <h3 className="font-bold text-[20px] text-gray-600 text-center">
-            {item?.name}
-          </h3>
-          {item?.isOnMarketStatus === "pre-order" && (
-            <div className="absolute cursor-pointer right-2 top-0 w-[70px] h-[70px] rounded-full bg-white flex flex-col justify-center items-center text-gray-500 font-bold shadow-lg">
-              <p>Up</p>
-              <p>Coming</p>
-            </div>
-          )}
-        </div>
+          item={item}
+          isOutOfStock={isOutOfStock}
+          addToWishlist={addToWishlist}
+          handleAddToCart={handleAddToCart}
+          setOpen={setOpen}
+          setSelectedImages={setSelectedImages}
+          setSelectImage={setSelectImage}
+          setSingleProductData={setSingleProductData}
+          setTitle={setTitle}
+        />
       );
     });
   }
@@ -360,10 +286,9 @@ function Shop() {
   const filterSidebar = (
     <div className="dasktopfilter filter w-[350px] p-4">
       <Select
-        className="mt-5 w-full"
+        className="mt-5 w-full h-10"
         placeholder="Sort by Product"
         onChange={onSortChange}
-        suffixIcon={<FilterFilled />}
       >
         <Option value="lowToHigh">Price: Low to High</Option>
         <Option value="highToLow">Price: High to Low</Option>
@@ -433,12 +358,20 @@ function Shop() {
         data-aos-delay="500"
       >
         <Input
-          size="large"
           className="w-full"
           placeholder="Search Your Product"
           onChange={handleSearchChange}
         />
-        {}
+        {screens.lg && (
+          <Button
+            type="primary"
+            icon={<FilterFilled />}
+            onClick={clearFilters}
+            className="ml-3 h-10"
+          >
+            Clear Filters
+          </Button>
+        )}
 
         {/* On small screens, show a Filters button to open the Drawer */}
         {!screens.lg && (
