@@ -81,18 +81,19 @@ export default function Product() {
     content = data?.data?.map((item) => {
       const isOutOfStock = item?.in_stock <= 0;
       return (
-        <ProductCard
-          key={item?._id}
-          item={item}
-          isOutOfStock={isOutOfStock}
-          addToWishlist={addToWishlist}
-          handleAddToCart={handleAddToCart}
-          setOpen={setOpen}
-          setSelectedImages={setSelectedImages}
-          setSelectImage={setSelectImage}
-          setSingleProductData={setSingleProductData}
-          setTitle={setTitle}
-        />
+        <div key={item?._id} className="p-2.5">
+          <ProductCard
+            item={item}
+            isOutOfStock={isOutOfStock}
+            addToWishlist={addToWishlist}
+            handleAddToCart={handleAddToCart}
+            setOpen={setOpen}
+            setSelectedImages={setSelectedImages}
+            setSelectImage={setSelectImage}
+            setSingleProductData={setSingleProductData}
+            setTitle={setTitle}
+          />
+        </div>
       );
     });
   }
