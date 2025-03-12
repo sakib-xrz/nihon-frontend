@@ -69,7 +69,7 @@ const Banner = () => {
           <div className="relative m-4 rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-105">
             {/* Gradient Overlay with animation */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-75 z-10 flex items-center justify-center">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-extrabold drop-shadow-lg animate-bounce">
+              <h1 className="text-2xl md:text-5xl lg:text-6xl text-white font-extrabold drop-shadow-lg animate-bounce">
                 Discount {brand1.percent}
               </h1>
             </div>
@@ -86,11 +86,11 @@ const Banner = () => {
             </div>
             {/* Brand Text with backdrop blur */}
             <div className="px-6 py-4 relative z-20 bg-white bg-opacity-90 backdrop-blur-sm">
-              <h3 className="text-xl md:text-2xl lg:text-3xl text-[#663130] uppercase font-bold tracking-wide">
+              <h3 className="text-xl md:text-2xl lg:text-3xl text-[#663130] uppercase font-bold tracking-wide line-clamp-1">
                 {brand1.title}
               </h3>
-              <p className="text-sm md:text-base text-[#663130] font-medium mt-2">
-                {brand1.description.slice(0, 80)}...
+              <p className="text-sm md:text-base text-[#663130] font-medium mt-2 line-clamp-2">
+                {brand1.description}
               </p>
             </div>
           </div>

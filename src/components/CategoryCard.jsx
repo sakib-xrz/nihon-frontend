@@ -14,7 +14,6 @@ export default function CategoryCard({ data }) {
     speed: 1200,
     slidesToShow: 4,
     slidesToScroll: 1,
-    initialSlide: 0,
     responsive: [
       {
         breakpoint: 1024,
@@ -44,7 +43,7 @@ export default function CategoryCard({ data }) {
   };
 
   return (
-    <div className="w-11/12 mx-auto">
+    <div className="w-11/12 mx-auto mt-10">
       <Slider {...settings}>
         {data?.data?.map((item) => (
           <div key={item._id} className="p-4">

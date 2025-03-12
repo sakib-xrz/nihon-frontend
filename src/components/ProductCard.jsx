@@ -106,7 +106,7 @@ export default function ProductCard({
           </h3>
         </Link>
 
-        <div className="flex items-end justify-between border-t border-dashed border-gray-100 pt-3">
+        <div className="flex items-end justify-between border-t border-gray-200 pt-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               {item?.discount?.value > 0 ? (
