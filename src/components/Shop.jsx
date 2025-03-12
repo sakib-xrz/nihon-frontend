@@ -6,7 +6,7 @@ import { useFetchAllProductsQuery } from "@/redux/feathers/Product/ProductApi";
 import { addProduct } from "@/redux/feathers/Product/ProductSlice";
 import { useFetchAllCategoryQuery } from "@/redux/feathers/shop/shopApi";
 import { toggleWishlistItem } from "@/redux/feathers/wishlist/wishlistSlice";
-import { FilterFilled } from "@ant-design/icons";
+import { FilterFilled, SearchOutlined } from "@ant-design/icons";
 import {
   Input,
   Pagination,
@@ -247,9 +247,9 @@ function Shop() {
     categoryContent = <Error text="No Data Found" />;
   } else {
     categoryContent = categoryData.data.map((item, index) => (
-      <div key={index}>
+      <div key={index} className="hover:bg-gray-50 rounded-md transition-all">
         <Radio
-          className="text-gray-400 text-[18px] mt-2 font-bold"
+          className="text-gray-600 text-base py-2 w-full font-medium"
           value={item?._id}
         >
           {item?.name}
@@ -268,9 +268,9 @@ function Shop() {
     brandContent = <Error text="No Data Found" />;
   } else {
     brandContent = brandData.data.map((item, index) => (
-      <div key={index}>
+      <div key={index} className="hover:bg-gray-50 rounded-md transition-all">
         <Radio
-          className="text-gray-400 text-[18px] font-bold mt-2"
+          className="text-gray-600 text-base py-2 w-full font-medium"
           value={item?._id}
         >
           {item?.name}
@@ -281,106 +281,165 @@ function Shop() {
 
   // Sidebar filter for larger screens
   const filterSidebar = (
-    <div className="dasktopfilter filter w-[350px] p-4">
+    <div className="filter w-[350px] bg-white rounded-lg shadow-sm border p-6 h-fit sticky top-36 z-10">
+      <h2 className="text-xl font-bold text-gray-800 mb-6">Filters</h2>
       <Select
-        className="mt-5 w-full h-10"
+        className="w-full mb-6"
         placeholder="Sort by Product"
         onChange={onSortChange}
+        size="large"
       >
         <Option value="lowToHigh">Price: Low to High</Option>
         <Option value="highToLow">Price: High to Low</Option>
         <Option value="rating">Sort by Rating</Option>
       </Select>
-      <h3 className="text-bold text-gray-700 font-bold mt-5">Price Range</h3>
-      <Slider
-        range
-        defaultValue={[minPrice, maxPrice || computedMaxPrice]}
-        max={maxPrice || computedMaxPrice}
-        onAfterChange={handlePriceAfterChange}
-      />
-      <h3 className="text-bold text-gray-700 font-bold mt-5">Categories</h3>
-      <Radio.Group onChange={handleCategoryChange} value={categoryValue}>
-        <Space direction="vertical">{categoryContent}</Space>
-      </Radio.Group>
-      <h3 className="text-bold text-gray-700 font-bold mt-5">Brand</h3>
-      <Radio.Group onChange={handleBrandChange} value={brandValue}>
-        <Space direction="vertical">{brandContent}</Space>
-      </Radio.Group>
+
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Price Range</h3>
+          <Slider
+            range
+            defaultValue={[minPrice, maxPrice || computedMaxPrice]}
+            max={maxPrice || computedMaxPrice}
+            onAfterChange={handlePriceAfterChange}
+            className="mt-2"
+          />
+        </div>
+
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Categories</h3>
+          <Radio.Group
+            onChange={handleCategoryChange}
+            value={categoryValue}
+            className="w-full"
+          >
+            <Space direction="vertical" className="w-full">
+              {categoryContent}
+            </Space>
+          </Radio.Group>
+        </div>
+
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Brand</h3>
+          <Radio.Group
+            onChange={handleBrandChange}
+            value={brandValue}
+            className="w-full"
+          >
+            <Space direction="vertical" className="w-full">
+              {brandContent}
+            </Space>
+          </Radio.Group>
+        </div>
+      </div>
     </div>
   );
 
   // Drawer filter for mobile devices
   const filterDrawerContent = (
-    <>
-      <div className="p-4">
-        <h3 className="text-bold text-gray-700 font-bold mt-2">Price Range</h3>
-        <Slider
-          range
-          defaultValue={[minPrice, maxPrice || computedMaxPrice]}
-          max={maxPrice || computedMaxPrice}
-          onAfterChange={handlePriceAfterChange}
-        />
-        <h3 className="text-bold text-gray-700 font-bold mt-4">Categories</h3>
-        <Radio.Group onChange={handleCategoryChange} value={categoryValue}>
-          <Space direction="vertical">{categoryContent}</Space>
-        </Radio.Group>
-        <h3 className="text-bold text-gray-700 font-bold mt-4">Brand</h3>
-        <Radio.Group onChange={handleBrandChange} value={brandValue}>
-          <Space direction="vertical">{brandContent}</Space>
-        </Radio.Group>
+    <div className="flex flex-col h-full">
+      <div className="flex-grow p-6 space-y-6 overflow-y-auto">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">Filters</h2>
+
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Price Range</h3>
+          <Slider
+            range
+            defaultValue={[minPrice, maxPrice || computedMaxPrice]}
+            max={maxPrice || computedMaxPrice}
+            onAfterChange={handlePriceAfterChange}
+            className="mt-2"
+          />
+        </div>
+
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Categories</h3>
+          <Radio.Group
+            onChange={handleCategoryChange}
+            value={categoryValue}
+            className="w-full"
+          >
+            <Space direction="vertical" className="w-full">
+              {categoryContent}
+            </Space>
+          </Radio.Group>
+        </div>
+
+        <div>
+          <h3 className="text-gray-800 font-semibold mb-4">Brand</h3>
+          <Radio.Group
+            onChange={handleBrandChange}
+            value={brandValue}
+            className="w-full"
+          >
+            <Space direction="vertical" className="w-full">
+              {brandContent}
+            </Space>
+          </Radio.Group>
+        </div>
       </div>
-      <Button type="primary" onClick={closeDrawer} className="mt-4 w-full">
-        Apply Filters
-      </Button>
-      <Button
-        type="primary"
-        danger
-        onClick={() => {
-          closeDrawer();
-          clearFilters();
-        }}
-        className="mt-4 w-full"
-      >
-        Clear filters
-      </Button>
-    </>
+
+      <div className="border-t p-6 space-y-3 bg-gray-50">
+        <Button
+          type="primary"
+          onClick={closeDrawer}
+          className="w-full h-10 font-medium"
+        >
+          Apply Filters
+        </Button>
+        <Button
+          type="default"
+          onClick={() => {
+            closeDrawer();
+            clearFilters();
+          }}
+          className="w-full h-10 font-medium"
+        >
+          Clear Filters
+        </Button>
+      </div>
+    </div>
   );
 
   return (
     <div className="w-full">
       <div
-        className="container text-center my-8 mx-auto flex"
+        className="container mx-auto px-4 my-8"
         data-aos="fade-up"
         data-aos-anchor-placement="top-bottom"
         data-aos-delay="500"
       >
-        <Input
-          className="w-full"
-          placeholder="Search Your Product"
-          onChange={handleSearchChange}
-        />
-        {screens.lg && (
-          <Button
-            type="primary"
-            icon={<FilterFilled />}
-            onClick={clearFilters}
-            className="ml-3 h-10"
-          >
-            Clear Filters
-          </Button>
-        )}
-
-        {/* On small screens, show a Filters button to open the Drawer */}
-        {!screens.lg && (
-          <Button
-            type="primary"
-            icon={<FilterFilled />}
-            onClick={openDrawer}
-            className="ml-3 h-10"
-          >
-            Filters
-          </Button>
-        )}
+        <div className="bg-white shadow-sm rounded-lg p-3 max-w-3xl mx-auto">
+          <div className="flex gap-3">
+            <Input
+              size="large"
+              className="flex-1"
+              placeholder="Search for products..."
+              onChange={handleSearchChange}
+              prefix={<SearchOutlined className="text-gray-400" />}
+            />
+            {screens.lg && (
+              <Button
+                type="default"
+                icon={<FilterFilled />}
+                onClick={clearFilters}
+                size="large"
+              >
+                Clear
+              </Button>
+            )}
+            {!screens.lg && (
+              <Button
+                type="primary"
+                icon={<FilterFilled />}
+                onClick={openDrawer}
+                size="large"
+              >
+                Filters
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
       {screens.md ? (
         <div className="flex gap-5">
