@@ -18,15 +18,12 @@ import {
   Button,
   Grid,
 } from "antd";
-import Image from "next/image";
-import Link from "next/link";
 import { toast } from "sonner";
 import "../style/shop.css";
 import Error from "./Error";
 import GlobalModalCard from "./GlobalModalCard/GlobalModalCard";
 import Loading from "./Loading";
 import { sanitizeParams } from "@/utils";
-import debounce from "lodash/debounce";
 import ProductCard from "./ProductCard";
 
 const { Option } = Select;
@@ -389,7 +386,7 @@ function Shop() {
         <div className="flex gap-5">
           {filterSidebar}
           <div className="w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {content}
             </div>
           </div>
