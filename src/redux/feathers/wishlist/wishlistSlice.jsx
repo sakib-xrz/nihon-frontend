@@ -40,7 +40,6 @@ export const wishlistSlice = createSlice({
   },
 });
 
-// need a hook to check if the item is in the wishlist
 export const useInWishlist = (id) => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   return wishlist.some((item) => item._id === id);
