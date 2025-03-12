@@ -17,6 +17,7 @@
     "axios": "^1.7.7",
     "canvas-confetti": "^1.9.3",
     "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
