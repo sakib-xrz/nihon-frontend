@@ -59,7 +59,6 @@ function Shop() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [limit, setLimit] = useState(12);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("");
 
@@ -85,21 +84,12 @@ function Shop() {
       brand: brandValue,
       searchTerm,
       page,
-      limit,
+      limit: 12,
       minPrice,
       maxPrice,
       sort,
     }),
-    [
-      categoryValue,
-      brandValue,
-      searchTerm,
-      page,
-      limit,
-      minPrice,
-      maxPrice,
-      sort,
-    ]
+    [categoryValue, brandValue, searchTerm, page, minPrice, maxPrice, sort]
   );
 
   // Debounce the filters object to reduce rapid API calls
@@ -247,7 +237,7 @@ function Shop() {
     categoryContent = <Error text="No Data Found" />;
   } else {
     categoryContent = categoryData.data.map((item, index) => (
-      <div key={index} className="hover:bg-gray-50 rounded-md transition-all">
+      <div key={index} className="rounded-md transition-all">
         <Radio
           className="text-gray-600 text-base py-2 w-full font-medium"
           value={item?._id}
@@ -268,7 +258,7 @@ function Shop() {
     brandContent = <Error text="No Data Found" />;
   } else {
     brandContent = brandData.data.map((item, index) => (
-      <div key={index} className="hover:bg-gray-50 rounded-md transition-all">
+      <div key={index} className="rounded-md transition-all">
         <Radio
           className="text-gray-600 text-base py-2 w-full font-medium"
           value={item?._id}
@@ -289,13 +279,13 @@ function Shop() {
         onChange={onSortChange}
         size="large"
       >
-        <Option value="lowToHigh">Price: Low to High</Option>
-        <Option value="highToLow">Price: High to Low</Option>
-        <Option value="rating">Sort by Rating</Option>
+        <Option value="-createdAt">Default</Option>
+        <Option value="priceAsc">Price: Low to High</Option>
+        <Option value="priceDesc">Price: High to Low</Option>
       </Select>
 
       <div className="space-y-6">
-        <div>
+        {/* <div>
           <h3 className="text-gray-800 font-semibold mb-4">Price Range</h3>
           <Slider
             range
@@ -304,7 +294,7 @@ function Shop() {
             onAfterChange={handlePriceAfterChange}
             className="mt-2"
           />
-        </div>
+        </div> */}
 
         <div>
           <h3 className="text-gray-800 font-semibold mb-4">Categories</h3>
@@ -338,10 +328,21 @@ function Shop() {
   // Drawer filter for mobile devices
   const filterDrawerContent = (
     <div className="flex flex-col h-full">
-      <div className="flex-grow p-6 space-y-6 overflow-y-auto">
+      <Select
+        className="w-full mb-6"
+        placeholder="Sort by Product"
+        onChange={onSortChange}
+        size="large"
+      >
+        <Option value="-createdAt">Default</Option>
+        <Option value="priceAsc">Price: Low to High</Option>
+        <Option value="priceDesc">Price: High to Low</Option>
+      </Select>
+
+      <div className="flex-grow space-y-6">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Filters</h2>
 
-        <div>
+        {/* <div>
           <h3 className="text-gray-800 font-semibold mb-4">Price Range</h3>
           <Slider
             range
@@ -350,7 +351,7 @@ function Shop() {
             onAfterChange={handlePriceAfterChange}
             className="mt-2"
           />
-        </div>
+        </div> */}
 
         <div>
           <h3 className="text-gray-800 font-semibold mb-4">Categories</h3>
@@ -379,7 +380,7 @@ function Shop() {
         </div>
       </div>
 
-      <div className="border-t p-6 space-y-3 bg-gray-50">
+      <div className="space-y-3 bg-gray-50">
         <Button
           type="primary"
           onClick={closeDrawer}
@@ -409,7 +410,7 @@ function Shop() {
         data-aos-anchor-placement="top-bottom"
         data-aos-delay="500"
       >
-        <div className="bg-white shadow-sm rounded-lg p-3 max-w-3xl mx-auto">
+        <div className="md:bg-white md:shadow-sm rounded-lg md:p-3 max-w-3xl mx-auto">
           <div className="flex gap-3">
             <Input
               size="large"
@@ -435,7 +436,7 @@ function Shop() {
                 onClick={openDrawer}
                 size="large"
               >
-                Filters
+                {screens.md ? "Filters" : ""}
               </Button>
             )}
           </div>
@@ -445,14 +446,14 @@ function Shop() {
         <div className="flex gap-5">
           {filterSidebar}
           <div className="w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {content}
             </div>
           </div>
         </div>
       ) : (
         <div className="w-full px-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {content}
           </div>
         </div>
@@ -462,7 +463,7 @@ function Shop() {
           className="text-center"
           current={page}
           total={totalProduct}
-          pageSize={limit}
+          pageSize={12}
           onChange={handlePageChange}
         />
       </div>
