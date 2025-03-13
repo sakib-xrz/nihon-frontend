@@ -8,17 +8,17 @@ import {
   ProductOutlined,
   ProfileOutlined,
   ShoppingOutlined,
-  UserOutlined
-} from '@ant-design/icons';
-import Link from 'next/link';
+  UserOutlined,
+} from "@ant-design/icons";
+import Link from "next/link";
 
 const menuItems = [
   {
-    key: 'home',
+    key: "home",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <HomeOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <HomeOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <Link href="/" className="font-bold text-gray-600">
           Home
@@ -27,11 +27,11 @@ const menuItems = [
     ),
   },
   {
-    key: 'user',
+    key: "user",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <UserOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <UserOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <Link href="/dashboard/user" className="font-bold text-gray-600">
           User
@@ -40,51 +40,44 @@ const menuItems = [
     ),
   },
   {
-    key: 'productManagement',
+    key: "productManagement",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <ShoppingOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <ShoppingOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <span className="font-bold text-gray-600">Product Management</span>
       </div>
     ),
     children: [
       {
-        key: 'products',
+        key: "products",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <ProductOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <ProductOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/products" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/products"
+              className="font-bold text-gray-600"
+            >
               All Product
             </Link>
           </div>
         ),
       },
       {
-        key: 'addNewProduct',
+        key: "addNewProduct",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <PlusOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <PlusOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/add-new-product" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/add-new-product"
+              className="font-bold text-gray-600"
+            >
               Add New Product
-            </Link>
-          </div>
-        ),
-      },
-      {
-        key: 'editProduct',
-        label: (
-          <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
-            <div className="mr-2">
-              <EditOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
-            </div>
-            <Link href="/dashboard/edit" className="font-bold text-gray-600">
-              Edit Product
             </Link>
           </div>
         ),
@@ -92,24 +85,27 @@ const menuItems = [
     ],
   },
   {
-    key: 'order',
+    key: "order",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <OrderedListOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <OrderedListOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <span className="font-bold text-gray-600">Order</span>
       </div>
     ),
     children: [
       {
-        key: 'allOrders',
+        key: "allOrders",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <ProfileOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <ProfileOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/all-order" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/all-order"
+              className="font-bold text-gray-600"
+            >
               All Orders
             </Link>
           </div>
@@ -118,37 +114,43 @@ const menuItems = [
     ],
   },
   {
-    key: 'category',
+    key: "category",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <PictureOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <PictureOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <span className="font-bold text-gray-600">Category</span>
       </div>
     ),
     children: [
       {
-        key: 'viewCategories',
+        key: "viewCategories",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <PictureOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <PictureOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/view-category" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/view-category"
+              className="font-bold text-gray-600"
+            >
               View Categories
             </Link>
           </div>
         ),
       },
       {
-        key: 'createCategory',
+        key: "createCategory",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <PlusOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <PlusOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/category" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/category"
+              className="font-bold text-gray-600"
+            >
               Create Category
             </Link>
           </div>
@@ -157,22 +159,22 @@ const menuItems = [
     ],
   },
   {
-    key: 'brand',
+    key: "brand",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <PictureOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <PictureOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <span className="font-bold text-gray-600">Brand</span>
       </div>
     ),
     children: [
       {
-        key: 'createBrand',
+        key: "createBrand",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <PlusOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <PlusOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
             <Link href="/dashboard/brand" className="font-bold text-gray-600">
               Create Brand
@@ -181,13 +183,16 @@ const menuItems = [
         ),
       },
       {
-        key: 'viewBrands',
+        key: "viewBrands",
         label: (
           <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
             <div className="mr-2">
-              <PictureOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+              <PictureOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
-            <Link href="/dashboard/view-brand" className="font-bold text-gray-600">
+            <Link
+              href="/dashboard/view-brand"
+              className="font-bold text-gray-600"
+            >
               View Brands
             </Link>
           </div>
@@ -196,11 +201,11 @@ const menuItems = [
     ],
   },
   {
-    key: 'delivery',
+    key: "delivery",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <CarOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <CarOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <Link href="/dashboard/delivery" className="font-bold text-gray-600">
           Delivery
@@ -209,11 +214,11 @@ const menuItems = [
     ),
   },
   {
-    key: 'banner',
+    key: "banner",
     label: (
       <div className="transition-transform duration-300 hover:translate-x-2 flex items-center">
         <div className="mr-2">
-          <PictureOutlined style={{ fontSize: '18px', color: '#f9a8d4' }} />
+          <PictureOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
         </div>
         <Link href="/dashboard/banner" className="font-bold text-gray-600">
           Banner

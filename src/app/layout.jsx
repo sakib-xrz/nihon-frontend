@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
           <AntdRegistry>
             <ConfigProvider theme={themeConfig}>
               <AosProvider>{children}</AosProvider>
-              <Toaster position="top-center" richColors />
+              <Toaster position="top-center" richColors visibleToasts={1} />
             </ConfigProvider>
           </AntdRegistry>
         </ReduxProvider>

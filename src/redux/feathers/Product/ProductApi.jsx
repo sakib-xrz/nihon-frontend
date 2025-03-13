@@ -71,7 +71,6 @@ export const productApi = baseApi.injectEndpoints({
           params,
         };
       },
-
       providesTags: ["product"],
     }),
   }),

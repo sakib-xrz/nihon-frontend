@@ -8,6 +8,7 @@ import { useFetchAllCategoryQuery } from "@/redux/feathers/shop/shopApi";
 import { sanitizeParams } from "@/utils";
 import { Alert, Button, Input, Pagination, Spin, Table, Tag } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -106,9 +107,9 @@ const DashbordProduct = () => {
       title: "Update",
       key: "update",
       render: (_, record) => (
-        <Button type="primary" onClick={() => handleUpdateProduct(record._id)}>
-          Update
-        </Button>
+        <Link href={`/dashboard/edit-product/${record._id}`}>
+          <Button type="primary">Update</Button>
+        </Link>
       ),
     },
     {
