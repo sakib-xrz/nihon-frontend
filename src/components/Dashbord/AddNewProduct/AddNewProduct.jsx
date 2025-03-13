@@ -11,6 +11,8 @@ import {
   Modal,
   Radio,
   DatePicker,
+  Alert,
+  Spin,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
@@ -28,8 +30,10 @@ const AddNewProduct = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [marketStatus, setMarketStatus] = useState("onMarket");
 
-  const { data: brandData } = useFetchAllBrandQuery();
-  const { data: categoryData } = useFetchAllCategoryQuery();
+  const { data: brandData, isLoading: brandLoading, error: brandError } = useFetchAllBrandQuery();
+  const { data: categoryData, isLoading: categoryLoading, error: categoryError } = useFetchAllCategoryQuery();
+
+  const [addNewProduct, { isLoading, isError }] = useAddNewProductMutation();
 
   const categoryOption = categoryData?.data?.map((item) => ({
     value: item._id,
@@ -39,8 +43,6 @@ const AddNewProduct = () => {
     value: item._id,
     label: item.name,
   }));
-
-  const [addNewProduct, { isLoading, isError }] = useAddNewProductMutation();
 
   const handlePreview = async (file) => {
     setPreviewImage(file.url || file.preview);
@@ -79,12 +81,68 @@ const AddNewProduct = () => {
     </div>
   );
 
+  if (categoryLoading || brandLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <div className="text-center">
+          <Spin size="large" />
+          <p className="mt-4 text-gray-600">Loading form data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (categoryError || brandError) {
+    return (
+      <div className="p-5">
+        <Alert
+          message="Error"
+          description={
+            categoryError && brandError
+              ? "Failed to load categories and brands. Please try again later."
+              : categoryError
+              ? "Failed to load categories. Please try again later."
+              : "Failed to load brands. Please try again later."
+          }
+          type="error"
+          showIcon
+        />
+      </div>
+    );
+  }
+
+  if (!categoryData?.data?.length || !brandData?.data?.length) {
+    return (
+      <div className="p-5">
+        <Alert
+          message="Missing Data"
+          description={
+            !categoryData?.data?.length && !brandData?.data?.length
+              ? "No categories and brands found. Please add some categories and brands first."
+              : !categoryData?.data?.length
+              ? "No categories found. Please add some categories first."
+              : "No brands found. Please add some brands first."
+          }
+          type="warning"
+          showIcon
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <h3 className="font-bold text-2xl px-2">Add New Product</h3>
-      <Form onFinish={onSubmit} layout="vertical">
+      <Form
+        onFinish={onSubmit}
+        layout="vertical"
+        className="max-w-3xl mx-auto p-5"
+      >
         <div className="mx-5 mt-5 mb-5">
-          <Form.Item label="Product Images">
+          <Form.Item 
+            label="Product Images" 
+            extra="Upload up to 3 product images. Each image should be less than 5MB."
+          >
             <Row justify="center" align="middle">
               <Upload
                 name="files"
@@ -93,7 +151,13 @@ const AddNewProduct = () => {
                 onPreview={handlePreview}
                 onChange={handleChange}
                 multiple
-                beforeUpload={() => false}
+                beforeUpload={(file) => {
+                  const isLt5M = file.size / 1024 / 1024 < 5;
+                  if (!isLt5M) {
+                    toast.error('Image must be smaller than 5MB!');
+                  }
+                  return false;
+                }}
                 onRemove={(file) => {
                   const newFileList = fileList.filter(
                     (item) => item.uid !== file.uid
@@ -122,7 +186,7 @@ const AddNewProduct = () => {
           </Form.Item>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Form.Item
             label="Product Name"
             name="name"
@@ -142,19 +206,6 @@ const AddNewProduct = () => {
             />
           </Form.Item>
           <Form.Item
-            label="Total Quantity"
-            name="total_quantity"
-            rules={[
-              { required: true, message: "Please enter the total quantity" },
-            ]}
-          >
-            <InputNumber
-              size="large"
-              style={{ width: "100%" }}
-              placeholder="Total Quantity"
-            />
-          </Form.Item>
-          <Form.Item
             label="In Stock"
             name="in_stock"
             rules={[
@@ -165,17 +216,6 @@ const AddNewProduct = () => {
               size="large"
               style={{ width: "100%" }}
               placeholder="In Stock"
-            />
-          </Form.Item>
-          <Form.Item
-            label="SKU"
-            name="sku"
-            rules={[{ required: true, message: "Please enter the SKU" }]}
-          >
-            <InputNumber
-              size="large"
-              style={{ width: "100%" }}
-              placeholder="SKU"
             />
           </Form.Item>
           <Form.Item label="Weight" name="weight">
@@ -228,7 +268,7 @@ const AddNewProduct = () => {
             />
           </Form.Item>
         </div>
-        <div className="px-5 pb-5">
+        <div className="mt-4">
           <Form.Item
             label="Description"
             name="desc"
@@ -239,7 +279,7 @@ const AddNewProduct = () => {
             <Input.TextArea rows={4} placeholder="Product Description" />
           </Form.Item>
           <div className="flex justify-end mt-4">
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button type="primary" htmlType="submit" loading={isLoading} size="large">
               Add Product
             </Button>
           </div>
