@@ -141,10 +141,10 @@ export default function ProductCard({
       </div>
 
       {item?.isOnMarketStatus === "pre-order" && (
-        <div className="absolute right-4 top-4 z-20">
+        <div className="absolute left-4 top-4 z-20">
           <div className="relative h-16 w-16 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 p-0.5 shadow-lg">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-center font-bold">
-              <div className="space-y-0.5 text-[10px] tracking-wide text-purple-700">
+            <div className="flex h-full w-full items-center justify-center rounded-full text-white text-center font-bold">
+              <div className="space-y-0.5 text-[10px] tracking-wide bg-transparent">
                 <p>UP</p>
                 <p>COMING</p>
               </div>
