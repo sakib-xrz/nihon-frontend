@@ -16,11 +16,7 @@ import {
   Progress,
   Modal,
 } from "antd";
-import {
-  DeleteOutlined,
-  UploadOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   useDeleteProductImageMutation,
   useFetchSingleProductQuery,
@@ -85,7 +81,7 @@ const ProductImageUpdate = () => {
       const file = fileList[fileList.length - 1];
       setFileList([file]);
       setSelectedIndex(index);
-      
+
       const formData = new FormData();
       formData.append("files", file.originFileObj);
 
@@ -211,7 +207,7 @@ const ProductImageUpdate = () => {
     <div className="p-6">
       <Card className="shadow-md rounded-lg">
         <Title level={4} className="mb-4">
-          Update Product Images
+          Update Images for {product?.name}
         </Title>
         <Alert
           message="Image Guidelines"

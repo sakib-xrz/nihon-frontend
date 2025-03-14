@@ -30,8 +30,16 @@ const AddNewProduct = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [marketStatus, setMarketStatus] = useState("onMarket");
 
-  const { data: brandData, isLoading: brandLoading, error: brandError } = useFetchAllBrandQuery();
-  const { data: categoryData, isLoading: categoryLoading, error: categoryError } = useFetchAllCategoryQuery();
+  const {
+    data: brandData,
+    isLoading: brandLoading,
+    error: brandError,
+  } = useFetchAllBrandQuery();
+  const {
+    data: categoryData,
+    isLoading: categoryLoading,
+    error: categoryError,
+  } = useFetchAllCategoryQuery();
 
   const [addNewProduct, { isLoading, isError }] = useAddNewProductMutation();
 
@@ -75,9 +83,9 @@ const AddNewProduct = () => {
   };
 
   const uploadButton = (
-    <div>
+    <div className="flex flex-col justify-center items-center size-28 border rounded-md border-dashed border-pink-600 cursor-pointer">
       {fileList.length < 3 ? <PlusOutlined /> : null}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div className="mt-1">Upload</div>
     </div>
   );
 
@@ -138,26 +146,19 @@ const AddNewProduct = () => {
         layout="vertical"
         className="max-w-3xl mx-auto p-5"
       >
-        <div className="mx-5 mt-5 mb-5">
-          <Form.Item 
-            label="Product Images" 
+        <div className="my-5">
+          <Form.Item
+            label="Product Images"
+            required
             extra="Upload up to 3 product images. Each image should be less than 5MB."
           >
-            <Row justify="center" align="middle">
+            <Row justify="start" align="middle">
               <Upload
                 name="files"
-                listType="picture-card"
+                listType="picture"
                 fileList={fileList}
-                onPreview={handlePreview}
                 onChange={handleChange}
                 multiple
-                beforeUpload={(file) => {
-                  const isLt5M = file.size / 1024 / 1024 < 5;
-                  if (!isLt5M) {
-                    toast.error('Image must be smaller than 5MB!');
-                  }
-                  return false;
-                }}
                 onRemove={(file) => {
                   const newFileList = fileList.filter(
                     (item) => item.uid !== file.uid
@@ -167,21 +168,6 @@ const AddNewProduct = () => {
               >
                 {fileList.length >= 3 ? null : uploadButton}
               </Upload>
-              <Modal
-                open={previewVisible}
-                title={previewTitle}
-                footer={null}
-                onCancel={() => setPreviewVisible(false)}
-              >
-                <Image
-                  alt="example"
-                  style={{ width: "100%", height: "auto" }}
-                  src={previewImage}
-                  width={800}
-                  height={600}
-                  priority
-                />
-              </Modal>
             </Row>
           </Form.Item>
         </div>
@@ -279,7 +265,12 @@ const AddNewProduct = () => {
             <Input.TextArea rows={4} placeholder="Product Description" />
           </Form.Item>
           <div className="flex justify-end mt-4">
-            <Button type="primary" htmlType="submit" loading={isLoading} size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoading}
+              size="large"
+            >
               Add Product
             </Button>
           </div>
