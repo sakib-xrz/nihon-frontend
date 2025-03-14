@@ -74,7 +74,7 @@ const menuItems = [
               <PlusOutlined style={{ fontSize: "18px", color: "#f9a8d4" }} />
             </div>
             <Link
-              href="/dashboard/add-new-product"
+              href="/dashboard/add-product"
               className="font-bold text-gray-600"
             >
               Add New Product

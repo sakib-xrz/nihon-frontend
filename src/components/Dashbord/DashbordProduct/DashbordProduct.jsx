@@ -29,6 +29,7 @@ import {
   DeleteOutlined,
   LeftOutlined,
   RightOutlined,
+  PictureOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -415,7 +416,7 @@ const DashbordProduct = () => {
       title: <div className="flex items-center justify-center">Actions</div>,
       key: "actions",
       fixed: "right",
-      width: 150,
+      width: 200,
       render: (_, record) => (
         <div className="flex items-center justify-center">
           <Space>
@@ -423,6 +424,13 @@ const DashbordProduct = () => {
               <Link href={`/dashboard/edit-product/${record._id}`}>
                 <Button type="primary" size="small">
                   Edit
+                </Button>
+              </Link>
+            </Tooltip>
+            <Tooltip title="Manage product images">
+              <Link href={`/dashboard/products/image-update/${record._id}`}>
+                <Button type="default" size="small" icon={<PictureOutlined />}>
+                  Images
                 </Button>
               </Link>
             </Tooltip>
