@@ -89,58 +89,16 @@ export default function Page() {
       key: "name",
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
       title: "Purchased Quantity",
       dataIndex: "purchased_quantity",
       key: "purchased_quantity",
+      align: "center",
     },
     {
-      title: "Add Review",
-      key: "add_review",
-      render: (_, record) => {
-        return (
-          <>
-            <Button onClick={() => setProductReview(record?._id)}>
-              Add Product Review
-            </Button>
-            {productReview === record?._id && (
-              <div className="mb-4 text-center mx-auto mt-4">
-                <Form
-                  onFinish={(values) => handleReviewSubmit(values)}
-                  layout="vertical"
-                >
-                  <Form.Item
-                    name="rating"
-                    rules={[
-                      { required: true, message: "Please provide a rating!" },
-                    ]}
-                  >
-                    <Rate />
-                  </Form.Item>
-                  <Form.Item
-                    name="comment"
-                    rules={[
-                      { required: true, message: "Please enter your review!" },
-                    ]}
-                  >
-                    <Input.TextArea
-                      rows={4}
-                      placeholder="Write your review here..."
-                    />
-                  </Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Submit Review
-                  </Button>
-                </Form>
-              </div>
-            )}
-          </>
-        );
-      },
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      align: "right",
     },
   ];
 
