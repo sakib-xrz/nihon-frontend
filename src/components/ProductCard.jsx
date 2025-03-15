@@ -10,12 +10,23 @@ export default function ProductCard({
   addToWishlist,
   handleAddToCart,
   setOpen,
-  setSelectedImages,
-  setSelectImage,
   setSingleProductData,
-  setTitle,
 }) {
   const isInWishlist = useInWishlist(item?._id);
+
+  const handleQuickView = () => {
+    if (setOpen && setSingleProductData && item) {
+      setSingleProductData(item);
+      setOpen(true);
+    }
+  };
+
+  // Calculate discounted price
+  const discountedPrice = item?.discount?.value > 0
+    ? item.discount.type === "percentage"
+      ? item.price - (item.price * item.discount.value) / 100
+      : item.price - item.discount.value
+    : item.price;
 
   return (
     <div
@@ -85,13 +96,7 @@ export default function ProductCard({
             <i className="fa-solid fa-cart-shopping text-lg"></i>
           </button>
           <button
-            onClick={() => {
-              setOpen(true);
-              setSingleProductData(item);
-              setSelectedImages(item.images);
-              setTitle(item.name);
-              setSelectImage(0);
-            }}
+            onClick={handleQuickView}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-purple-50 hover:text-purple-500 hover:shadow-purple-100"
           >
             <i className="fa-solid fa-eye text-lg"></i>
@@ -112,7 +117,7 @@ export default function ProductCard({
               {item?.discount?.value > 0 ? (
                 <>
                   <span className="text-lg font-bold text-gray-900">
-                    {item?.discountedPrice} Tk
+                    {discountedPrice} Tk
                   </span>
                   <span className="text-sm text-gray-400 line-through">
                     {item?.price} Tk
@@ -126,15 +131,19 @@ export default function ProductCard({
             </div>
             <span
               className={`inline-flex items-center gap-1.5 text-sm ${
-                isOutOfStock ? "text-red-500" : "text-emerald-600"
+                isOutOfStock ? "text-red-500" : item?.in_stock <= 5 ? "text-orange-500" : "text-emerald-600"
               }`}
             >
               <span
                 className={`h-1.5 w-1.5 rounded-full ${
-                  isOutOfStock ? "bg-red-500" : "bg-emerald-500"
-                }`}
+                  isOutOfStock ? "bg-red-500" : item?.in_stock <= 5 ? "bg-orange-500" : "bg-emerald-500"
+                } animate-pulse`}
               ></span>
-              {isOutOfStock ? "Out of Stock" : `In Stock: ${item?.in_stock}`}
+              {isOutOfStock 
+                ? "Out of Stock" 
+                : item?.in_stock <= 5 
+                  ? "Low Stock" 
+                  : `In Stock: ${item?.in_stock}`}
             </span>
           </div>
         </div>
