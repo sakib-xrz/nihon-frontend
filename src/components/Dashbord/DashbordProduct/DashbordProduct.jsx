@@ -30,6 +30,7 @@ import {
   LeftOutlined,
   RightOutlined,
   PictureOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -253,8 +254,7 @@ const DashbordProduct = () => {
     {
       title: "Product Info",
       key: "productInfo",
-      fixed: "left",
-      width: 300,
+      width: 200,
       render: (record) => (
         <div className="flex items-center gap-3">
           <Image
@@ -284,48 +284,29 @@ const DashbordProduct = () => {
         return aPrice - bPrice;
       },
       render: (record) => {
-        const discount = getDiscountInfo(record);
-
         return (
-          <div>
-            <div
-              className={discount.isActive ? "line-through text-gray-500" : ""}
-            >
-              BDT {record.price.toFixed(2)}
+          <div className="flex flex-col items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
+              {record?.discount?.value > 0 ? (
+                <>
+                  <Typography.Text strong className="text-base line-clamp-1">
+                    {record?.discountedPrice} Tk
+                  </Typography.Text>
+                  <Typography.Text className="text-sm text-gray-400 line-through">
+                    {record?.price} Tk
+                  </Typography.Text>
+                </>
+              ) : (
+                <Typography.Text strong className="text-base line-clamp-1">
+                  {record?.price} Tk
+                </Typography.Text>
+              )}
             </div>
-            {(discount.isActive || discount.isPending) && (
-              <div>
-                {discount.isActive && (
-                  <div className="text-green-600 font-medium">
-                    ${discount.discountedPrice.toFixed(2)}
-                  </div>
-                )}
-                <Tooltip
-                  title={
-                    discount.isPending
-                      ? `Discount starts on ${discount.startDate.toLocaleDateString()}`
-                      : `Discount ends on ${discount.endDate.toLocaleDateString()}`
-                  }
-                >
-                  <Tag
-                    color={discount.isActive ? "green" : "orange"}
-                    className="mt-1"
-                  >
-                    {discount.isActive
-                      ? `-${discount.discountText}`
-                      : `Starts: ${discount.discountText}`}
-                  </Tag>
-                </Tooltip>
-              </div>
-            )}
-            {discount.isExpired && (
-              <Tooltip
-                title={`Discount expired on ${discount.endDate.toLocaleDateString()}`}
-              >
-                <Tag color="red" className="mt-1">
-                  Expired
-                </Tag>
-              </Tooltip>
+            {record?.discount?.value > 0 && (
+              <Tag color="red">
+                {record?.discount?.value}{" "}
+                {record?.discount?.type === "percentage" ? "%" : "Tk"} off
+              </Tag>
             )}
           </div>
         );
@@ -415,14 +396,13 @@ const DashbordProduct = () => {
     {
       title: <div className="flex items-center justify-center">Actions</div>,
       key: "actions",
-      fixed: "right",
-      width: 200,
+      width: 180,
       render: (_, record) => (
         <div className="flex items-center justify-center">
           <Space>
             <Tooltip title="Edit product details">
               <Link href={`/dashboard/edit-product/${record._id}`}>
-                <Button type="primary" size="small">
+                <Button type="primary" size="small" icon={<EditOutlined />}>
                   Edit
                 </Button>
               </Link>
@@ -439,6 +419,7 @@ const DashbordProduct = () => {
                 danger
                 size="small"
                 onClick={() => showDeleteConfirm(record)}
+                icon={<DeleteOutlined />}
               >
                 Delete
               </Button>
